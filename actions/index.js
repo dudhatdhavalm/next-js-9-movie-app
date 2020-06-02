@@ -28,24 +28,24 @@ export const getMovies = () => {
 };
 
 export const getMovieById = (id) => {
-  return new Promise((resolve) => {
-    const movieIndex = MOVIE_DATA.findIndex((movie) => {
-      return movie.id == id;
-    });
-    const movie = MOVIE_DATA[movieIndex];
-    setTimeout(() => {
-      resolve(movie);
-    }, 100);
-  });
+  return axios
+    .get(`${url}/api/v1/movies/${id}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => console.log(err));
 };
 
 export const createMovie = (movie) => {
   movie.id = Math.random().toString(36).substr(2, 7);
+  return axios
+    .post(`${url}/api/v1/movies`, movie)
+    .then((res) => res.data)
+    .catch((err) => console.log(err));
+};
 
-  MOVIE_DATA.push(movie);
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(MOVIE_DATA);
-    });
+export const deleteMovie = (id) => {
+  return axios.delete(`${url}/api/v1/movies/${id}`).then((res) => {
+    return res.data;
   });
 };
