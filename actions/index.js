@@ -4,10 +4,11 @@ const url = "http://localhost:3000";
 const MOVIE_DATA = [];
 
 const CATEGORY_DATA = [
-  { id: "1", name: "Drama" },
-  { id: "2", name: "Action" },
-  { id: "3", name: "Adventeru" },
-  { id: "4", name: "Historical" },
+  { id: "0", name: "all" },
+  { id: "1", name: "drama" },
+  { id: "2", name: "action" },
+  { id: "3", name: "adventure" },
+  { id: "4", name: "historical" },
 ];
 
 export const getCategories = () => {
@@ -46,6 +47,12 @@ export const createMovie = (movie) => {
 
 export const deleteMovie = (id) => {
   return axios.delete(`${url}/api/v1/movies/${id}`).then((res) => {
+    return res.data;
+  });
+};
+
+export const updateMovie = (movie) => {
+  return axios.put(`${url}/api/v1/movies/${movie.id}`, movie).then((res) => {
     return res.data;
   });
 };

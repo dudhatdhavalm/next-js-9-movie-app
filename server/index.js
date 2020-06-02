@@ -55,6 +55,24 @@ app.prepare().then(() => {
     return res.json(deletedMovie);
   });
 
+  server.put("/api/v1/movies/:id", (req, res) => {
+    const id = req.params.id;
+    const movie = req.body;
+    const movieIndex = MOVIE_DATA.findIndex((movie) => {
+      return movie.id == id;
+    });
+    MOVIE_DATA[movieIndex] = movie;
+    const pathToFile = path.join(__dirname, filePath);
+    const stringyfiedData = JSON.stringify(MOVIE_DATA, null, 2);
+    fs.writeFile(pathToFile, stringyfiedData, (err) => {
+      if (err) {
+        return res.status(422).send(err);
+      }
+    });
+
+    return res.json(movie);
+  });
+
   const writeIntoFile = () => {};
 
   // this will handle all request

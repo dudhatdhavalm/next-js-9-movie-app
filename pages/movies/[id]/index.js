@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import Link from "next/link";
 import {
   getMovieById,
   deleteMovie as deleteMovieAction,
@@ -11,7 +12,6 @@ const Movie = (props) => {
 
   const deleteMovie = (id) => {
     deleteMovieAction(id).then(() => {
-      // TODO
       router.push("/");
     });
   };
@@ -32,13 +32,18 @@ const Movie = (props) => {
             Learn more
           </button>
           <button
-            className="btn btn-danger btn-lg"
+            className="btn btn-danger btn-lg mr-2"
             href="#"
             role="button"
             onClick={() => deleteMovie(id)}
           >
             Delete
           </button>
+          <Link href="/movies/[id]/edit" as={`/movies/${id}/edit`}>
+            <a className="btn btn-warning btn-lg" role="button">
+              edit
+            </a>
+          </Link>
         </p>
       </div>
       <p className="desc-text">{movie.longDesc}</p>
